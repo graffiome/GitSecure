@@ -39,13 +39,13 @@
               {{ data.repo_info.name }}
               <br>
                       <p class="md-body-1">  
-                              {{  data.repo_info.parse_results }}
+                              <em>API Key Parse Results: </em>{{  data.repo_info.parse_results }}
                       </p>
                       <p class="md-body-1"  ng-init="data.report2='More lorem ipsum'"> 
-                                {{ data.repo_info.scan_results }}
+                                <em>ScanJS Results: </em>{{ data.repo_info.scan_results }}
                    </p>
                       <p class="md-body-1"  ng-init="data.report3='Additional lorem ipsum'"> 
-                                {{ data.repo_info.retire_results }}
+                                <em>RetireJS Results: </em>{{ data.repo_info.retire_results }}
                    </p>
 
             </li>
