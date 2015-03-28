@@ -6,7 +6,9 @@
         <md-tab-label class="md-subhead">Main</md-tab-label>
         <md-tab-template>
           <h5 class="md-subhead">Welcome to Git Secure</h5>
-          <p class="md-body-1">Deep v before they sold out PBR disrupt, trust fund cray iPhone hoodie meh sustainable American Apparel blog readymade sartorial Thundercats. Tilde forage selfies, chia paleo tattooed lo-fi. Cray direct trade farm-to-table American Apparel, disrupt DIY Truffaut you probably haven't heard of them. Sustainable hella VHS tattooed selfies blog Wes Anderson. Four dollar toast listicle quinoa, skateboard forage distillery literally fanny pack organic craft beer stumptown Kickstarter mixtape ugh migas. Meh pour-over roof party fap, bespoke PBR Pinterest leggings Bushwick cred trust fund bicycle rights. Chillwave pork belly skateboard next level plaid, American Apparel 3 wolf moon biodiesel narwhal Etsy DIY Blue Bottle.</p>
+          <p class="md-body-1">
+                GitSecure is a web app to help developers become aware of known vulnerabilities.  Specifically, GitSecure checks for visible API keys, insecure javascript code patterns, and known vulnerable components.  Submit your github credentials to login, and then choose which of your repositories should be GitSecured.
+          </p>
         </md-tab-template>
       </md-tab>
       <md-tab id="tab2">
@@ -18,6 +20,7 @@
              <input type="checkbox" data-repo-id="{{ repo.id }}" data-git-url="{{ repo.git_url }}" data-url="{{repo.html_url}}" data-user-id="{{ repo.owner.id }}" data-repo-name="{{ repo.name }}"/>
              {{ repo.name }}
              <br>
+
            </li>
          </ul>
         </md-tab-template>
@@ -33,8 +36,18 @@
         </div>
           <ul>
             <li class="md-body-1" ng-repeat="data in results">
-              {{ repo.name }}
+              {{ data.name }}
               <br>
+                      <p class="md-body-1">  
+                              {{  data.report1 }}
+                      </p>
+                      <p class="md-body-1"  ng-init="data.report2='More lorem ipsum'"> 
+                                {{ data.report2 }}
+                   </p>
+                      <p class="md-body-1"  ng-init="data.report3='Additional lorem ipsum'"> 
+                                {{ data.report3 }}
+                   </p>
+
             </li>
           </ul>
         </md-tab-template>

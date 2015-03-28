@@ -48,6 +48,16 @@ window.angular.module('main',['ngMaterial'])
 
   $scope.getResults = function(){
     mainly.getResults(function(data){
+      console.log('data', data);
+
+      var repoReport = {};
+
+      repoReport.report1 = 'parse report'
+      repoReport.report2 = 'scan report'
+      repoReport.report3 = 'retire report'
+
+        data = [ repoReport ];
+
       $scope.results = data;
     });
   };
