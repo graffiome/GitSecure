@@ -36,16 +36,16 @@
         </div>
           <ul>
             <li class="md-body-1" ng-repeat="data in results">
-              {{ data.name }}
+              {{ data.repo_info.name }}
               <br>
                       <p class="md-body-1">  
-                              {{  data.report1 }}
+                              {{  data.repo_info.parse_results }}
                       </p>
                       <p class="md-body-1"  ng-init="data.report2='More lorem ipsum'"> 
-                                {{ data.report2 }}
+                                {{ data.repo_info.scan_results }}
                    </p>
                       <p class="md-body-1"  ng-init="data.report3='Additional lorem ipsum'"> 
-                                {{ data.report3 }}
+                                {{ data.repo_info.retire_results }}
                    </p>
 
             </li>
