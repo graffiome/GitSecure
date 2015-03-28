@@ -130,6 +130,7 @@ app.get('/results/:userid', function(req, res){
       delete doc.users;
       return doc;
     });
+    console.log('serving', docs, collection);
     res.status(201).send(collection);
   }); 
 });
