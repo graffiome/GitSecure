@@ -21,7 +21,7 @@ exports.readListOfFiles = function(repoObj, endAsyncLoopCallback) {
   */
   var repositoryId = repoObj.repo_id.toString();
   var repositoryUrl = repoObj.repo_info.git_url;
-  var repositoryPath = 'git_data/' + repositoryId;
+  var repositoryPath = 'server/services/git_data/files/' + repositoryId;
   console.log('Downloading Repository: ' + repositoryUrl);
 
   mkdirp(repositoryPath);

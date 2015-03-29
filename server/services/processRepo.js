@@ -16,10 +16,9 @@ var processRepo = function(repoID) {
     // makes dirs and downloads repos for chosen repo
     console.log('starting downloadService to DL repos...');
     downloadService.readListOfFiles(repoObj, function(repoID){
-      console.log('final REPOID: ', repoID, typeof repoID);
       // db connection with our Repos
       var repos = db.get('Repos');
-      var fullRelativePath = __dirname + '/../../git_data/' + repoID;
+      var fullRelativePath = __dirname + '/git_data/files/' + repoID;
 
       // async library function that lets you run async functions in parallel and wait until 
       // they're all finished before continuing (we wait for each scan to finish before deleting files)
@@ -30,6 +29,7 @@ var processRepo = function(repoID) {
             var scanResults;
             try {
               scanResults = scanjs.scanDir(fullRelativePath);  
+              console.log('ScanJS results: ', scanResults);
             } catch (e) {
               console.log('ScanJS error!: ', e);
               scanResults = {'error': 'ScanJS failed... sorry!'};
@@ -40,11 +40,11 @@ var processRepo = function(repoID) {
             }
 
             // add scan results to the DB
-            repos.findAndModify({query: {repo_id: repoID}, new: true, update: {$set: {'repo_info.scan_results': JSON.stringify(scanResults)}}}, function(err, doc) {
+            repos.findAndModify({query: {repo_id: repoID}, new: true, update: {$set: {'repo_info.scan_results': JSON.stringify(scanResults)}}}, function(err) { // doc could be 2nd var
               if (err) {
                 console.error(err);
               }
-              console.log('record updated with scanResults...:', doc);
+              console.log('record updated with scanResults...');
               callback(null, 'scan');
             });
           },
@@ -66,11 +66,11 @@ var processRepo = function(repoID) {
             }
 
             // add retire results to the DB
-            repos.findAndModify({query: {repo_id: repoID}, new: true, update: {$set: {'repo_info.retire_results': retireResults}}}, function(err, doc) {
+            repos.findAndModify({query: {repo_id: repoID}, new: true, update: {$set: {'repo_info.retire_results': JSON.stringify(retireResults)}}}, function(err) { // doc could be 2nd var
               if (err) {
                 console.log('db err: ', err);
               }
-              console.log('record updated with retireResults...: ', doc);
+              console.log('record updated with retireResults...');
               callback(null, 'retire');
             });
           },
@@ -80,15 +80,16 @@ var processRepo = function(repoID) {
             console.log('starting api_key scan...');
             try {
               parseService.parseFile(repoID, function(parseResults) {
-                if (!parseResults.length) {
+                console.log('parseResults output: ', parseResults);
+                if (parseResults.length === 0) {
                   parseResults = {'clear': 'Congrats, nothing found!'};
                 }
 
-                repos.findAndModify({query: {repo_id: repoID}, new: true, update: {$set: {'repo_info.parse_results': JSON.stringify(parseResults)}}}, function(err, doc) {
+                repos.findAndModify({query: {repo_id: repoID}, new: true, update: {$set: {'repo_info.parse_results': JSON.stringify(parseResults)}}}, function(err) { // doc could be 2nd var
                   if (err) {
                     console.error(err);
                   }
-                  console.log('record updated with parseResults...:', doc);
+                  console.log('record updated with parseResults...');
                   callback(null, 'parse');
                 });
               });
@@ -111,7 +112,8 @@ var processRepo = function(repoID) {
           } else {
             // delete the repo here
             console.log('Removing repoID: ', repoID);
-            fileSystemUtilities.removeDirectoryAsync(__dirname + '/git_data/' + repoID);  
+            console.log('this repo here: ', __dirname);
+            fileSystemUtilities.removeDirectoryAsync(__dirname + '/git_data/files/' + repoID);  
           }
       });
 

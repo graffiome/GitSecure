@@ -1,6 +1,7 @@
 'use strict';
 
 var curl = require('curlrequest');
+var serverConfig = require('../serverConfig.js');
 
 // expects a git hub URL similar to 
 // https://github.com/:user/:repo with no trailing slash
@@ -20,18 +21,18 @@ exports.registerRepo = function(repoUrl, authToken, unsubscribe) {
     data: {
       'hub.mode': subscribe,
       'hub.topic': targetUrl,
-      'hub.callback': 'http://gitsecure.cloudapp.net:8080',
+      'hub.callback': serverConfig.gitHooksCallbackURL,
     }
   }, function(error, incoming, body){
     console.log('registration response');
     if (error) {
-      console.log('error:', error);
+      console.error('error:', error);
     }
     if (incoming) {
-      console.log('response', incoming);
+      // console.log('response', incoming);
     }
     if (body) {
-      console.log('response', body);
+      // console.log('response', body);
     }
   });
   console.log('registration sent');
