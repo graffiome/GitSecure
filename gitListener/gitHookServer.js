@@ -16,7 +16,6 @@ var server = app.listen(8080, serverConfig.localURL, function(){
 app.use(bodyParser.json());
 
 app.post('/', function(req, res){
-  console.log('request: ', req.body);
   // If this is our repo deploy
   if (req.body.repository && req.body.repository.full_name === 'graffiome/GitSecure') {
     deploy();
