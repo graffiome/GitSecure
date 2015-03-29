@@ -91,6 +91,7 @@ module.exports = function(grunt) {
           'client/**/*.js',
           'gitListener/**/*.js',
           'server/**/*.js',
+          '!server/services/git_data/files',
           '!server/services/git_data/files/**',
           '!server/services/git_data/files/**/*'
         ],
