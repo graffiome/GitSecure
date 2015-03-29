@@ -114,7 +114,7 @@ window.angular.module('main',['ngMaterial'])
       //  git_url: git_url,
       //  checked: true/false
       // }
-      console.log('repo data to server: ', repos);
+      console.log(repos);
     $http.post('/repos/', repos).success(function(data){
       console.log('response received:', data);
     });    
