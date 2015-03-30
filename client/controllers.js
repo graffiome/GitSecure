@@ -33,7 +33,7 @@ window.angular.module('main',['ngMaterial'])
   }, 100, 0, true);
 
   $interval(function() {
-    $scope.mode = ($scope.mode == 'query' ? 'determinate' : 'query');
+    $scope.mode = ($scope.mode === 'query' ? 'determinate' : 'query');
   }, 7200, 0, true);
 
   // Tab Functionality for Material Design
@@ -114,7 +114,7 @@ window.angular.module('main',['ngMaterial'])
       //  git_url: git_url,
       //  checked: true/false
       // }
-      console.log(repos)
+      console.log(repos);
     $http.post('/repos/', repos).success(function(data){
       console.log('response received:', data);
     });    

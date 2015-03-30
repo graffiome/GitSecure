@@ -5,14 +5,15 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var fileSystemUtilities = require('./server/services/fileSystem/utilities.js');
+var serverConfig = require('./serverConfig.js');
 
-var server = app.listen(3000, function(){
+var server = app.listen(serverConfig.appServerPort, serverConfig.localURL, function(){
   var host = server.address().address;
   var port = server.address().port;
   console.log('example app listening at http://%s:%s', host, port);
   // refactored from app.js, cleans out any un-deleted files that may exist in our git_data dir
   console.log('Initializing GitSecure and cleaning from last cycle');
-  var pathToData = __dirname + '/git_data';
+  var pathToData = __dirname + '/server/services/git_data/files';
   fileSystemUtilities.removeDirectorySync(pathToData);
   console.log('system ready to process repos...');
 });
@@ -53,8 +54,6 @@ app.get('/repos/:userid', function(req, res){
 
 app.post('/repos/', function(req, res){
 
-  console.log(req.body[0].userid)
-  console.log(typeof req.body[0].userid)
   //console.log('This is the request:', req);
   db.findAllReposByUser(req.body[0].userid, function(docs) {
     var serverRepos = docs;
@@ -130,7 +129,7 @@ app.get('/results/:userid', function(req, res){
       delete doc.users;
       return doc;
     });
-    console.log('serving', req.params.userid, docs, collection);
+    // console.log('serving', req.params.userid, docs, collection);
     res.status(201).send(collection);
   }); 
 });

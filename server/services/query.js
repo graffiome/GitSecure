@@ -14,7 +14,7 @@ exports.query = function(repoID, callback){
         console.log(err);
       } else {
         // once we get it (array of Repo documents) pass it along
-        console.log('repo to process: ', doc);
+        console.log('repo to process: ', doc.repo_id, doc.repo_info.name);
         callback(doc);
       }
     });

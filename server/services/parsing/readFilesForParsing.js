@@ -66,9 +66,9 @@ var getTextFile = function(path, callback) {
 
 // concats all the files in the directory for processing as a single unit
 var concatDirectory = function(pathName, callback) {
-  var path = __dirname + '/../../../git_data/' + pathName;
+  var path = __dirname + '/../git_data/files/' + pathName;
   var dirNamePath = __dirname + '/concatDirectories.sh';
-  var dirCWD = __dirname + '/../../../git_data/' + pathName +'/';
+  var dirCWD = __dirname + '/../git_data/files/' + pathName +'/';
   var bash = spawn('sh', [ dirNamePath ], {
     cwd: dirCWD,
     env: './'
