@@ -3,19 +3,22 @@
 var db = require('./database.js');
 var express = require('express');
 var bodyParser = require('body-parser');
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
 var app = express();
 var fileSystemUtilities = require('./server/services/fileSystem/utilities.js');
 var serverConfig = require('./serverConfig.js');
 
-var server = app.listen(serverConfig.appServerPort, serverConfig.localURL, function(){
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('example app listening at http://%s:%s', host, port);
-  // refactored from app.js, cleans out any un-deleted files that may exist in our git_data dir
-  console.log('Initializing GitSecure and cleaning from last cycle');
-  var pathToData = __dirname + '/server/services/git_data/files';
-  fileSystemUtilities.removeDirectorySync(pathToData);
-  console.log('system ready to process repos...');
+var privateKey  = fs.readFileSync(__dirname + '/.certs/key.pem', 'utf8');
+var certificate = fs.readFileSync(__dirname + '/.certs/www_gitsecure_me.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
+app.use(function(req, res, next) {
+  if(!req.secure) {
+    res.redirect(301, 'https://www.graffio.me');
+  }
+  next();
 });
 
 app.use(express.static(__dirname + '/client/'));
@@ -23,6 +26,7 @@ app.use(express.static(__dirname + '/client/'));
 require('./auth-middleware.js')(app);
 
 app.use(bodyParser.json());
+
 
 // GET route for getting all subscribed repos
 // response as an array of repo ids that
@@ -132,4 +136,23 @@ app.get('/results/:userid', function(req, res){
     // console.log('serving', req.params.userid, docs, collection);
     res.status(201).send(collection);
   }); 
+});
+
+var httpServer = http.createServer(app);
+httpServer.listen(serverConfig.appServerHttpPort, serverConfig.localURL, function(){
+  var host = httpServer.address().address;
+  var port = httpServer.address().port;
+  console.log('http redirect listening at http://%s:%s', host, port);
+});
+
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(serverConfig.appServerHttpsPort, serverConfig.localURL, function(){
+  var host = httpsServer.address().address;
+  var port = httpsServer.address().port;
+  console.log('secure app listening at https://%s:%s', host, port);
+  // refactored from app.js, cleans out any un-deleted files that may exist in our git_data dir
+  console.log('Initializing GitSecure and cleaning from last cycle');
+  var pathToData = __dirname + '/server/services/git_data/files';
+  fileSystemUtilities.removeDirectorySync(pathToData);
+  console.log('system ready to process repos...');
 });
