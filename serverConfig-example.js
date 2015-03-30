@@ -12,4 +12,5 @@ exports.localHost = 'your local host (could be localhost or an ip address) [123.
 // port for the server to receive notifications from GitHub on repo update (and registering the initial hook)
 exports.hookServerPort = 8080;
 // port to visit the app itself
-exports.appServerPort = 3000;
+exports.appServerHttpPort = 3000;
+exports.appServerHttpsPort = 3000;
