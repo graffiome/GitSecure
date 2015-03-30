@@ -9,3 +9,7 @@ exports.gitHooksCallbackURL = 'your URL for Git to send hooks notifications [htt
 // when running on a LAN with a router, the URLs above need your public IP (can get from google), GitHub will not register a hook to 'localhost'
 // the localHost value below will either be your public IP address, or potentially your unique IP within your personal LAN
 exports.localHost = 'your local host (could be localhost or an ip address) [123.123.123.123 OR ~192.168.X.X]';
+// port for the server to receive notifications from GitHub on repo update (and registering the initial hook)
+exports.hookServerPort = 8080;
+// port to visit the app itself
+exports.appServerPort = 3000;

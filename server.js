@@ -7,7 +7,7 @@ var app = express();
 var fileSystemUtilities = require('./server/services/fileSystem/utilities.js');
 var serverConfig = require('./serverConfig.js');
 
-var server = app.listen(3000, serverConfig.localURL, function(){
+var server = app.listen(serverConfig.appServerPort, serverConfig.localURL, function(){
   var host = server.address().address;
   var port = server.address().port;
   console.log('example app listening at http://%s:%s', host, port);

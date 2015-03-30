@@ -7,10 +7,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-var server = app.listen(8080, serverConfig.localURL, function(){
+var server = app.listen(serverConfig.hookServerPort, serverConfig.localURL, function(){
   var host = server.address().address;
   var port = server.address().port;
-  console.log('example app listening at host: http://%s  port: %s', host, port);
+  console.log('example app listening at http://%s:%s', host, port);
 });
 
 app.use(bodyParser.json());
