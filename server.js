@@ -16,7 +16,7 @@ var credentials = {key: privateKey, cert: certificate};
 
 app.use(function(req, res, next) {
   if(!req.secure) {
-    res.redirect(301, 'https://www.graffio.me');
+    res.redirect(301, exports.appSecureUrl);
   }
   next();
 });
