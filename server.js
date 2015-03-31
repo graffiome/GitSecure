@@ -16,7 +16,7 @@ var credentials = {key: privateKey, cert: certificate};
 
 app.use(function(req, res, next) {
   if(!req.secure) {
-    res.redirect(301, exports.appSecureUrl);
+    res.redirect(301, serverConfig.appSecureURL);
   }
   next();
 });
