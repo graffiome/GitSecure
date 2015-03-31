@@ -18,6 +18,6 @@ exports.appServerHttpsPort = 8443;
 // Where to send http -> https redirects. localhost or your deployed site.
 exports.appSecureURL = 'https://www.graffio.me';
 // Path to Certificate relative to root dir
-exports.certificatePath = __dirname + '/PathToCert/www_gitsecure_me.crt';
+exports.certificatePath = __dirname + '/PathToCert/SiteCert.crt';
 // Path to Certificate key relative to root dir
-exports.certificateKeyPath = __dirname + '/PathToCert/key.pem';
+exports.certificateKeyPath = __dirname + '/PathToCert/SiteKey.pem';
