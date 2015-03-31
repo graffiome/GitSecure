@@ -60,6 +60,7 @@ module.exports = function(grunt) {
       dev: {
         script: 'server.js',
         options: {
+          ignore: ['server/services/git_data'],
           callback: function (nodemon) {
             nodemon.on('crash', function () {
               console.error('App Crash');
@@ -71,6 +72,7 @@ module.exports = function(grunt) {
       git: {
         script: 'gitListener/gitHookServer.js',
         options: {
+          ignore: ['server/services/git_data'],
           callback: function (nodemon) {
             nodemon.on('crash', function () {
               console.error('App Crash');
