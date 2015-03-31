@@ -3,15 +3,15 @@
 var deploy = require('./deploy.js').deploy;
 var processRepo = require('../server/services/processRepo.js').processRepo;
 var serverConfig = require('../serverConfig.js');
+var https = require('https');
+var fs = require('fs');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-var server = app.listen(serverConfig.hookServerPort, serverConfig.localURL, function(){
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('example app listening at http://%s:%s', host, port);
-});
+var privateKey  = fs.readFileSync(serverConfig.certificateKeyPath, 'utf8');
+var certificate = fs.readFileSync(serverConfig.certificatePath, 'utf8');
+var credentials = {key: privateKey, cert: certificate};
 
 app.use(bodyParser.json());
 
@@ -26,4 +26,9 @@ app.post('/', function(req, res){
   res.end();
 });
 
-
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(serverConfig.hookServerPort, serverConfig.localURL, function(){
+  var host = httpsServer.address().address;
+  var port = httpsServer.address().port;
+  console.log('Git Hook app listening at http://%s:%s', host, port);
+});

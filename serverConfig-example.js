@@ -12,4 +12,12 @@ exports.localHost = 'your local host (could be localhost or an ip address) [123.
 // port for the server to receive notifications from GitHub on repo update (and registering the initial hook)
 exports.hookServerPort = 8080;
 // port to visit the app itself
-exports.appServerPort = 3000;
+exports.appServerHttpPort = 3000;
+// Port the secure version of the app is on:
+exports.appServerHttpsPort = 8443;
+// Where to send http -> https redirects. localhost or your deployed site.
+exports.appSecureURL = 'https://www.graffio.me';
+// Path to Certificate relative to root dir
+exports.certificatePath = __dirname + '/PathToCert/SiteCert.crt';
+// Path to Certificate key relative to root dir
+exports.certificateKeyPath = __dirname + '/PathToCert/SiteKey.pem';
