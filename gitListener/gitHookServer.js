@@ -9,8 +9,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-var privateKey  = fs.readFileSync(__dirname + '/../.certs/key.pem', 'utf8');
-var certificate = fs.readFileSync(__dirname + '/../.certs/www_gitsecure_me.crt', 'utf8');
+var privateKey  = fs.readFileSync(serverConfig.certificateKeyPath, 'utf8');
+var certificate = fs.readFileSync(serverConfig.certificatePath, 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 
 app.use(bodyParser.json());

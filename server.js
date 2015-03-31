@@ -10,8 +10,8 @@ var app = express();
 var fileSystemUtilities = require('./server/services/fileSystem/utilities.js');
 var serverConfig = require('./serverConfig.js');
 
-var privateKey  = fs.readFileSync(__dirname + '/.certs/key.pem', 'utf8');
-var certificate = fs.readFileSync(__dirname + '/.certs/www_gitsecure_me.crt', 'utf8');
+var privateKey  = fs.readFileSync(serverConfig.certificateKeyPath, 'utf8');
+var certificate = fs.readFileSync(serverConfig.certificatePath, 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 
 app.use(function(req, res, next) {
