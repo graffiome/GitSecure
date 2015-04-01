@@ -13,8 +13,13 @@ var retireScan = function(dir) {
     output = null;
   }
   // if output isn't an array make it null (the text isn't helpful)
-  if (JSON.parse(output).length < 1) {
-    output = null; 
+  try {
+    if (JSON.parse(output).length < 1) {
+     output = null; 
+    } 
+  } catch (e) {
+    console.error('retireJS returned non JSON');
+    output = null;
   }
   // returning either the 2nd or 3rd item in the results array (2nd should be STDOUT, 3rd should be STDERR)
   console.log('retireJS output: ', output);
